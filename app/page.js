@@ -28,7 +28,9 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-blue-950 flex flex-col items-center justify-center relative">
-      <SearchForm recipeData={data} onSearch={setResults} />
+      <div className="mt-10">
+        <SearchForm recipeData={data} onSearch={setResults} />
+      </div>
             
       <div className="flex-grow p-6 overflow-auto">
         <div className="max-w-7xl mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3">

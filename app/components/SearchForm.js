@@ -93,7 +93,7 @@ export default function SearchForm({recipeData, onSearch}) {
     };
 
     return ( 
-        <div className="w-full max-w-2xl fixed top-1/4 left-1/2 transform -translate-x-1/2 z-10">
+        <div className="w-full  max-w-2xl">
             <h1 className="text-3xl text-center font-bold text-blue-50 mb-5">Allergy-Free Recipes</h1>
             <div className="relative mb-5">
                 <input
