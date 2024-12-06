@@ -1,0 +1,90 @@
+{
+    "items": [
+        {
+            "id": 1,
+            "type": {
+                "primary": "Baking",
+                "secondary": "Desserts"
+            },
+            "author": "BakerBob",
+            "does_not_contain": {
+                "milk": true,
+                "eggs": true,
+                "fish": true,
+                "shellfish": true,
+                "tree_nuts": true,
+                "peanuts": true,
+                "wheat": false,
+                "soy": true,
+                "gluten": false,
+                "sugar": true
+            },
+            "tags": [
+                "chocholate",
+                "stevia",
+                "low-carb",
+                "keto",
+                "gluten-free"
+            ],
+            "name": "Keto Chocolate Chip Cookies",
+            "description": "These cookies are a great low-carb alternative to traditional chocolate chip cookies. They are sweetened with stevia and are gluten-free.",
+            "photos": [
+                "https://www.publicdomainpictures.net/pictures/250000/velka/flat-lay-cookies.jpg"
+            ],
+            "ingredients": [
+                {
+                    "name": "almond flour",
+                    "quantity": "1 cup"
+                },
+                {
+                    "name": "baking soda",
+                    "quantity": "1/2 tsp"
+                },
+                {
+                    "name": "salt",
+                    "quantity": "1/4 tsp"
+                },
+                {
+                    "name": "butter",
+                    "quantity": "1/2 cup"
+                },
+                {
+                    "name": "stevia",
+                    "quantity": "1/2 cup"
+                },
+                {
+                    "name": "vanilla extract",
+                    "quantity": "1 tsp"
+                },
+                {
+                    "name": "egg",
+                    "quantity": "1"
+                },
+                {
+                    "name": "sugar-free chocolate chips",
+                    "quantity": "1/2 cup"
+                }
+            ],
+            "instructions": [
+                "Preheat oven to 350°F.",
+                "In a medium bowl, combine almond flour, baking soda, and salt.",
+                "In a large bowl, cream together butter and stevia.",
+                "Add vanilla extract and egg to butter mixture and mix well.",
+                "Gradually add almond flour mixture to butter mixture and mix until well combined.",
+                "Fold in chocolate chips.",
+                "Drop dough by rounded tablespoonfuls onto a parchment-lined baking sheet.",
+                "Bake for 10-12 minutes, or until cookies are golden brown.",
+                "Cool on a wire rack before serving."
+            ],
+            "published_at": "2024-11-13 @03:58:12",
+            "comments": [
+                {
+                    "commentNum": 1,
+                    "author": "Tinton",
+                    "content": "You could try giving him a puzzle toy to keep him occupied. It will help him focus his energy and keep him entertained.",
+                    "timestamp": "2024-11-13 @04:12:34"
+                }
+            ]
+        }
+    ]
+}
