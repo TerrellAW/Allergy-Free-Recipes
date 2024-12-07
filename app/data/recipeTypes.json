@@ -1,0 +1,43 @@
+{
+    "types": {
+        "primary": [
+            "Baking",
+            "Grilling",
+            "Roasting",
+            "Frying",
+            "Boiling",
+            "Steaming",
+            "Sauteing",
+            "Broiling",
+            "Poaching",
+            "Simmering",
+            "Braising",
+            "Stewing",
+            "Microwaving",
+            "Pressure Cooking",
+            "Slow Cooking",
+            "Smoking",
+            "Blending",
+            "Freezing",
+            "Pickling",
+            "Fermenting",
+            "Sous Vide",
+            "Dehydrating",
+            "Canning",
+            "Raw",
+            "Brining"
+        ],
+        "secondary": [
+            "Desserts",
+            "Breakfasts",
+            "Appetizers",
+            "Main Courses",
+            "Side Dishes",
+            "Snacks",
+            "Lunches",
+            "Dinners",
+            "Brunches",
+            "Beverages"
+        ]
+    }
+}
