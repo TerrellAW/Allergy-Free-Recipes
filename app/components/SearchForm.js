@@ -77,19 +77,13 @@ export default function SearchForm({ recipeData, onSearch }) {
     };
 
     const handleHideCheckboxes = () => {
-        if (
-            !milk &&
-            !eggs &&
-            !fish &&
-            !shellfish &&
-            !treeNuts &&
-            !peanuts &&
-            !wheat &&
-            !soy &&
-            !gluten &&
-            !sugar
-        )
-            setShowCheckboxes(false);
+        setTimeout(() => {
+            if (!milk && !eggs && !fish && !shellfish && !treeNuts && 
+                !peanuts && !wheat && !soy && !gluten && !sugar && 
+                document.activeElement !== inputRef.current) {
+                setShowCheckboxes(false);
+            }
+        }, 200);
     };
 
     return ( 
