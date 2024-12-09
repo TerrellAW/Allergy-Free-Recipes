@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 
-export default function SearchForm({recipeData, onSearch}) {
+export default function SearchForm({ recipeData, onSearch }) {
     const [data] = useState(recipeData?.items || []); 
     const [searchText, setSearchText] = useState('');
     const [milk, setMilk] = useState(false);
