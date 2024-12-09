@@ -1,24 +1,38 @@
 "use client";
 
 import { useState, useEffect } from "react";
+
 import recipeTypeData from "../data/recipeTypes.json";
 
-export default function MakeRecipe() {
+export default function MakeRecipe({ recipeData }) {
+    const [data, setData] = useState(recipeData?.items || []);
+
     const [formData, setFormData] = useState({
-        recipeType: '',
-        mealType: '',
-        recipeName: '',
+        type: { primary: '', secondary: '' },
+        name: '',
         description: '',
         ingredients: [{ name: '', quantity: '' }],
-        instructions: '',
-        publishDate: new Date().toISOString().split('T')[0],
-        tags: [],
+        instructions: [''],
+        published_at: new Date().toISOString().split('T')[0],
+        tags: [''],
     });
     const [error, setError] = useState('');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
+        if (name === "recipeType" || name === "mealType") {
+            setFormData((prev) => ({
+                ...prev,
+                type: {
+                    ...prev.type,
+                    [name === "recipeType" ? "primary" : "secondary"]: value
+                }
+            }));
+        } else if (name === "tags") {
+            setFormData((prev) => ({ ...prev, [name]: value.split(', ').map((tag) => tag.trim()) }));
+        } else {
+            setFormData((prev) => ({ ...prev, [name]: value }));
+        }
     };
 
     const handleIngredientChange = (index, field, value) => {
@@ -34,12 +48,42 @@ export default function MakeRecipe() {
         }));
     };
 
+    const handleInstructionChange = (index, value) => {
+        const newInstructions = [...formData.instructions];
+        newInstructions[index] = value;
+        setFormData((prev) => ({ ...prev, instructions: newInstructions }));
+    };
+
+    const handleAddInstruction = () => {
+        setFormData((prev) => ({
+            ...prev,
+            instructions: [...prev.instructions, ''],
+        }));
+    };
+
+    const handleTagChange = (index, value) => {
+        const newTags = [...formData.tags];
+        newTags[index] = value;
+        setFormData((prev) => ({ ...prev, tags: newTags }));
+    };
+
+    const handleAddTag = () => {
+        setFormData((prev) => ({
+            ...prev,
+            tags: [...prev.tags, ''],
+        }));
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setError('Not yet implemented.');
-        // TODO: Parse data into JSON, append to recipeData and PUT to Pantry API
+        // TODO: Append new recipe to data and PUT to Pantry
         console.log(formData);
     };
+
+    const AddNewRecipe = (newRecipe) => {
+        setData((prev) => [...prev, newRecipe]);
+    }
 
     return (
         <form onSubmit={handleSubmit} className="space-y-6 text-blue-50 w-4/5 mt-10 mb-20">
@@ -51,7 +95,7 @@ export default function MakeRecipe() {
                     <select
                         id="recipeType"
                         name="recipeType"
-                        value={formData.recipeType}
+                        value={formData.type.primary}
                         onChange={handleChange}
                         className="w-full rounded-md bg-blue-100 text-blue-950 shadow-sm focus:border-blue-300 focus:ring-blue-300"
                     >
@@ -69,7 +113,7 @@ export default function MakeRecipe() {
                     <select
                         id="mealType"
                         name="mealType"
-                        value={formData.mealType}
+                        value={formData.type.secondary}
                         onChange={handleChange}
                         className="w-full rounded-md bg-blue-100 text-blue-950 shadow-sm focus:border-blue-300 focus:ring-blue-300"
                     >
@@ -83,12 +127,12 @@ export default function MakeRecipe() {
                 </div>
             </div>
             <div>
-                <label htmlFor="recipeName" className="block text-sm font-medium mb-1">Recipe Name</label>
+                <label htmlFor="name" className="block text-sm font-medium mb-1">Recipe Name</label>
                 <input
-                    id="recipeName"
-                    name="recipeName"
+                    id="name"
+                    name="name"
                     type="text"
-                    value={formData.recipeName}
+                    value={formData.name}
                     onChange={handleChange}
                     className="w-full rounded-md bg-blue-100 text-blue-950 shadow-sm focus:border-blue-300 focus:ring-blue-300"
                     required
@@ -140,26 +184,50 @@ export default function MakeRecipe() {
             </div>
             <div>
                 <label htmlFor="instructions" className="block text-sm font-medium mb-1">Instructions</label>
-                <textarea
-                    id="instructions"
-                    name="instructions"
-                    value={formData.instructions}
-                    onChange={handleChange}
-                    rows="24"
-                    className="w-full rounded-md bg-blue-100 text-blue-950 shadow-sm focus:border-blue-300 focus:ring-blue-300"
-                    required
-                />
+                <div className="flex flex-col items-center">
+                    {formData.instructions.map((instruction, index) => (
+                        <div key={index} className="gap-4 w-full">
+                            <input 
+                                type="text"
+                                value={instruction}
+                                onChange={(e) => handleInstructionChange(index, e.target.value)}
+                                placeholder={`Step ${index + 1}`}
+                                className="w-full rounded-md bg-blue-100 text-blue-950 shadow-sm focus:border-blue-300 focus:ring-blue-300"
+                                required
+                            />
+                        </div>
+                    ))}
+                    <button
+                        type="button"
+                        onClick={handleAddInstruction}
+                        className="text-blue-950 bg-blue-100 rounded-md p-2 px-4 mt-4 hover:bg-blue-300"
+                    >
+                        Add Step
+                    </button>
+                </div>
             </div>
             <div>
                 <label htmlFor="tags" className="block text-sm font-medium mb-1">Tags</label>
-                <input
-                    id="tags"
-                    name="tags"
-                    type="text"
-                    value={formData.tags.join(', ')}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, tags: e.target.value.split(', ').map((tag) => tag.trim()) }))}
-                    className="w-full rounded-md bg-blue-100 text-blue-950 shadow-sm focus:border-blue-300 focus:ring-blue-300"
-                />
+                <div className="flex flex-col items-center">
+                    {formData.tags.map((tag, index) => (
+                        <div key={index} className="gap-4 w-full">
+                            <input
+                                type="text"
+                                value={tag}
+                                onChange={(e) => handleTagChange(index, e.target.value)}
+                                placeholder="Tag"
+                                className="w-full rounded-md bg-blue-100 text-blue-950 shadow-sm focus:border-blue-300 focus:ring-blue-300"
+                            />
+                        </div>
+                    ))}
+                    <button
+                        type="button"
+                        onClick={handleAddTag}
+                        className="text-blue-950 bg-blue-100 rounded-md p-2 px-4 mt-4 hover:bg-blue-300"
+                    >
+                        Add Tag
+                    </button>
+                </div>
             </div>
             <div className="flex justify-center">
                 <button type="submit" className="text-blue-950 bg-blue-100 rounded-md p-2 px-4 hover:bg-blue-300">Submit</button>
