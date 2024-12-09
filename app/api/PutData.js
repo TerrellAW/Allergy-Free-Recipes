@@ -17,7 +17,7 @@ export default async function PutData({ data }) {
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
-    } catch (error) {;vcxnbu 
+    } catch (error) { 
         console.error("Error adding data to Pantry", error);
         return null;
     }
