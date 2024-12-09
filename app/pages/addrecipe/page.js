@@ -2,6 +2,8 @@ import AddForm from '../../components/AddForm';
 
 export default function AddRecipePage() {
     return (
-        <AddForm />
+        <main className='bg-blue-950 min-h-screen'>
+            <AddForm />
+        </main>
     );
 }
