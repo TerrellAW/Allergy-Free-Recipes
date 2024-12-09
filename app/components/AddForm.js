@@ -157,9 +157,7 @@ export default function MakeRecipe({ recipeData }) {
     };
 
     const AddNewRecipe = async (newRecipe) => {
-        // Add new recipe to data
-        setData([...data, newRecipe]);
-        await PutData({ items: data });
+        await PutData({ items: [...data, newRecipe] });
     }
 
     // Use useEffect to log the updated data and call PutData
