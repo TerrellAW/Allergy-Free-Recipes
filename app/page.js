@@ -17,7 +17,7 @@ export default function Home() {
     }
 
     fetchData();
-  }, []); // Add dependency for triggering effect whenever new data is added to the Pantry
+  }, []);
 
   if (!data) {
     return (
