@@ -17,6 +17,14 @@ export default function AddRecipePage() {
         fetchData();
     }, []);
 
+    if (!data) {
+        return (
+            <main className='min-h-screen bg-blue-950 flex flex-col items-center justify-center relative'>
+                <h1 className='text-4xl text-blue-50'>Loading...</h1>
+            </main>
+        );
+    }
+
     return (
         <main className='bg-blue-950 min-h-screen flex justify-center'>
             <AddForm recipeData={data} />

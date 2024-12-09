@@ -8,6 +8,7 @@ export default function MakeRecipe({ recipeData }) {
     const [data, setData] = useState(recipeData?.items || []);
 
     const [formData, setFormData] = useState({
+        id: data.length + 1, // Might not work due to async nature of data
         type: { primary: '', secondary: '' },
         name: '',
         description: '',
@@ -15,7 +16,22 @@ export default function MakeRecipe({ recipeData }) {
         instructions: [''],
         published_at: new Date().toISOString().split('T')[0],
         tags: [''],
+        comments: [{}],
+        photos: [''],
+        does_not_contain: {
+            eggs: false,
+            fish: false,
+            gluten: false,
+            milk: false,
+            peanuts: false,
+            shellfish: false,
+            soy: false,
+            sugar: false,
+            tree_nuts: false,
+            wheat: false,
+        },
     });
+
     const [error, setError] = useState('');
 
     const handleChange = (e) => {
@@ -75,15 +91,22 @@ export default function MakeRecipe({ recipeData }) {
     };
 
     const handleSubmit = (e) => {
+        console.log('Data before submit:');
+        console.log(data);
         e.preventDefault();
         setError('Not yet implemented.');
         AddNewRecipe(formData);
-        console.log(data);
     };
 
-    const AddNewRecipe = (newRecipe) => {
+    const AddNewRecipe = ({ newRecipe }) => {
         setData((prev) => [...prev, newRecipe]);
     }
+
+    // Use useEffect to log the updated data 
+    useEffect(() => { 
+        console.log('Data after change:'); 
+        console.log(data); 
+    }, [data]);
 
     return (
         <form onSubmit={handleSubmit} className="space-y-6 text-blue-50 w-4/5 mt-10 mb-20">
@@ -157,7 +180,7 @@ export default function MakeRecipe({ recipeData }) {
                         <div key={index} className="grid grid-cols-2 gap-4 w-full">
                             <input
                                 type="text"
-                                value={ingredient.name}
+                                value={ingredient.name.toLowerCase()}
                                 onChange={(e) => handleIngredientChange(index, 'name', e.target.value)}
                                 placeholder="Ingredient"
                                 className="w-full rounded-md bg-blue-100 text-blue-950 shadow-sm focus:border-blue-300 focus:ring-blue-300"
@@ -165,7 +188,7 @@ export default function MakeRecipe({ recipeData }) {
                             />
                             <input
                                 type="text"
-                                value={ingredient.quantity}
+                                value={ingredient.quantity.toLowerCase()}
                                 onChange={(e) => handleIngredientChange(index, 'quantity', e.target.value)}
                                 placeholder="Quantity"
                                 className="w-full rounded-md bg-blue-100 text-blue-950 shadow-sm focus:border-blue-300 focus:ring-blue-300"
@@ -213,7 +236,7 @@ export default function MakeRecipe({ recipeData }) {
                         <div key={index} className="gap-4 w-full">
                             <input
                                 type="text"
-                                value={tag}
+                                value={tag.toLowerCase()}
                                 onChange={(e) => handleTagChange(index, e.target.value)}
                                 placeholder="Tag"
                                 className="w-full rounded-md bg-blue-100 text-blue-950 shadow-sm focus:border-blue-300 focus:ring-blue-300"
