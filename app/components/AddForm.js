@@ -37,12 +37,13 @@ export default function MakeRecipe() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setError('Not yet implemented.');
+        // TODO: Parse data into JSON, append to recipeData and PUT to Pantry API
         console.log(formData);
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-6 text-blue-50">
-            <h1 className="text-3xl font-bold mb-6">Make a Recipe</h1>
+        <form onSubmit={handleSubmit} className="space-y-6 text-blue-50 w-4/5 mt-10 mb-20">
+            <h1 className="text-3xl font-bold mb-6 text-center">Make a Recipe</h1>
             <div className="grid grid-cols-2 gap-4">
                 <div>
                     <label htmlFor="recipeType" className="block text-sm font-medium mb-1">Recipe Type</label>
@@ -100,40 +101,42 @@ export default function MakeRecipe() {
                     name="description"
                     value={formData.description}
                     onChange={handleChange}
-                    rows="3"
+                    rows="6"
                     className="w-full rounded-md bg-blue-100 text-blue-950 shadow-sm focus:border-blue-300 focus:ring-blue-300"
                     required
                 />
             </div>
-            <div>
+            <div className="w-full">
                 <label className="block text-sm font-medium mb-1">Ingredients</label>
-                {formData.ingredients.map((ingredient, index) => (
-                    <div key={index} className="grid grid-cols-3 gap-2">
-                        <input
-                            type="text"
-                            value={ingredient.name}
-                            onChange={(e) => handleIngredientChange(index, 'name', e.target.value)}
-                            placeholder="Ingredient"
-                            className="w-full rounded-md bg-blue-100 text-blue-950 shadow-sm focus:border-blue-300 focus:ring-blue-300"
-                            required
-                        />
-                        <input
-                            type="text"
-                            value={ingredient.quantity}
-                            onChange={(e) => handleIngredientChange(index, 'quantity', e.target.value)}
-                            placeholder="Quantity"
-                            className="w-full rounded-md bg-blue-100 text-blue-950 shadow-sm focus:border-blue-300 focus:ring-blue-300"
-                            required
-                        />
-                    </div>
-                ))}
-                <button
-                    type="button"
-                    onClick={handleAddIngredient}
-                    className="text-blue-950 bg-blue-100 rounded-md p-2 px-4 mt-4"
-                >
-                    Add Ingredient
-                </button>
+                <div className="flex flex-col items-center">
+                    {formData.ingredients.map((ingredient, index) => (
+                        <div key={index} className="grid grid-cols-2 gap-4 w-full">
+                            <input
+                                type="text"
+                                value={ingredient.name}
+                                onChange={(e) => handleIngredientChange(index, 'name', e.target.value)}
+                                placeholder="Ingredient"
+                                className="w-full rounded-md bg-blue-100 text-blue-950 shadow-sm focus:border-blue-300 focus:ring-blue-300"
+                                required
+                            />
+                            <input
+                                type="text"
+                                value={ingredient.quantity}
+                                onChange={(e) => handleIngredientChange(index, 'quantity', e.target.value)}
+                                placeholder="Quantity"
+                                className="w-full rounded-md bg-blue-100 text-blue-950 shadow-sm focus:border-blue-300 focus:ring-blue-300"
+                                required
+                            />
+                        </div>
+                    ))}
+                    <button
+                        type="button"
+                        onClick={handleAddIngredient}
+                        className="text-blue-950 bg-blue-100 rounded-md p-2 px-4 mt-4 hover:bg-blue-300"
+                    >
+                        Add Ingredient
+                    </button>
+                </div>
             </div>
             <div>
                 <label htmlFor="instructions" className="block text-sm font-medium mb-1">Instructions</label>
@@ -142,7 +145,7 @@ export default function MakeRecipe() {
                     name="instructions"
                     value={formData.instructions}
                     onChange={handleChange}
-                    rows="6"
+                    rows="24"
                     className="w-full rounded-md bg-blue-100 text-blue-950 shadow-sm focus:border-blue-300 focus:ring-blue-300"
                     required
                 />
@@ -158,8 +161,9 @@ export default function MakeRecipe() {
                     className="w-full rounded-md bg-blue-100 text-blue-950 shadow-sm focus:border-blue-300 focus:ring-blue-300"
                 />
             </div>
-
-            <button type="submit" className="text-blue-950 bg-blue-100 rounded-md p-2 px-4">Submit</button>
+            <div className="flex justify-center">
+                <button type="submit" className="text-blue-950 bg-blue-100 rounded-md p-2 px-4 hover:bg-blue-300">Submit</button>
+            </div>
             
             {error && <p>{error}</p>}
         </form>
