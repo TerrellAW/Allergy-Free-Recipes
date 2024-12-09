@@ -3,12 +3,14 @@
 import { useState, useEffect } from "react";
 
 import recipeTypeData from "../data/recipeTypes.json";
+import PutData from "../api/PutData";
 
 export default function MakeRecipe({ recipeData }) {
     const [data, setData] = useState(recipeData?.items || []);
 
     const [formData, setFormData] = useState({
         id: data.length + 1, // Might not work due to async nature of data
+        author: 'AnonymousUser',
         type: { primary: '', secondary: '' },
         name: '',
         description: '',
@@ -19,16 +21,16 @@ export default function MakeRecipe({ recipeData }) {
         comments: [{}],
         photos: [''],
         does_not_contain: {
-            eggs: false,
-            fish: false,
-            gluten: false,
-            milk: false,
-            peanuts: false,
-            shellfish: false,
-            soy: false,
-            sugar: false,
-            tree_nuts: false,
-            wheat: false,
+            eggs: true,
+            fish: true,
+            gluten: true,
+            milk: true,
+            peanuts: true,
+            shellfish: true,
+            soy: true,
+            sugar: true,
+            tree_nuts: true,
+            wheat: true,
         },
     });
 
@@ -94,18 +96,74 @@ export default function MakeRecipe({ recipeData }) {
         console.log('Data before submit:');
         console.log(data);
         e.preventDefault();
-        setError('Not yet implemented.');
+        // Check for allergen matches in ingredients
+        const allergenMatches = formData.ingredients.some(ingredient => {
+            const ingredientName = ingredient.name.toLowerCase();
+            
+            if (ingredientName.includes('egg')) formData.does_not_contain.eggs = false;
+            if (ingredientName.includes('fish')) formData.does_not_contain.fish = false;
+            if (ingredientName.includes('salmon')) formData.does_not_contain.fish = false;
+            if (ingredientName.includes('tuna')) formData.does_not_contain.fish = false;
+            if (ingredientName.includes('trout')) formData.does_not_contain.fish = false;
+            if (ingredientName.includes('cod')) formData.does_not_contain.fish = false;
+            if (ingredientName.includes('haddock')) formData.does_not_contain.fish = false;
+            if (ingredientName.includes('halibut')) formData.does_not_contain.fish = false;
+            if (ingredientName.includes('sardine')) formData.does_not_contain.fish = false;
+            if (ingredientName.includes('anchovy')) formData.does_not_contain.fish = false;
+            if (ingredientName.includes('wheat')) formData.does_not_contain.gluten = false;
+            if (ingredientName.includes('flour')) formData.does_not_contain.gluten = false;
+            if (ingredientName.includes('bread')) formData.does_not_contain.gluten = false;
+            if (ingredientName.includes('rye')) formData.does_not_contain.gluten = false;
+            if (ingredientName.includes('barley')) formData.does_not_contain.gluten = false;
+            if (ingredientName.includes('oat')) formData.does_not_contain.gluten = false;
+            if (ingredientName.includes('milk')) formData.does_not_contain.milk = false;
+            if (ingredientName.includes('butter')) formData.does_not_contain.milk = false;
+            if (ingredientName.includes('cheese')) formData.does_not_contain.milk = false;
+            if (ingredientName.includes('cream')) formData.does_not_contain.milk = false;
+            if (ingredientName.includes('yogurt')) formData.does_not_contain.milk = false;
+            if (ingredientName.includes('peanut')) formData.does_not_contain.peanuts = false;
+            if (ingredientName.includes('shellfish')) formData.does_not_contain.shellfish = false;
+            if (ingredientName.includes('shrimp')) formData.does_not_contain.shellfish = false;
+            if (ingredientName.includes('crab')) formData.does_not_contain.shellfish = false;
+            if (ingredientName.includes('lobster')) formData.does_not_contain.shellfish = false;
+            if (ingredientName.includes('clam')) formData.does_not_contain.shellfish = false;
+            if (ingredientName.includes('oyster')) formData.does_not_contain.shellfish = false;
+            if (ingredientName.includes('mussel')) formData.does_not_contain.shellfish = false;
+            if (ingredientName.includes('scallop')) formData.does_not_contain.shellfish = false;
+            if (ingredientName.includes('crayfish')) formData.does_not_contain.shellfish = false;
+            if (ingredientName.includes('prawn')) formData.does_not_contain.soy = false;
+            if (ingredientName.includes('soy')) formData.does_not_contain.soy = false;
+            if (ingredientName.includes('tofu')) formData.does_not_contain.soy = false;
+            if (ingredientName.includes('sugar')) formData.does_not_contain.sugar = false;
+            if (ingredientName.includes('honey')) formData.does_not_contain.sugar = false;
+            if (ingredientName.includes('maple syrup')) formData.does_not_contain.sugar = false;
+            if (ingredientName.includes('agave')) formData.does_not_contain.sugar = false;
+            if (ingredientName.includes('berry')) formData.does_not_contain.sugar = false;
+            if (ingredientName.includes('berries')) formData.does_not_contain.sugar = false;
+            if (ingredientName.includes('fruit')) formData.does_not_contain.sugar = false;
+            if (ingredientName.includes('nut')) formData.does_not_contain.tree_nuts = false;
+            if (ingredientName.includes('almond')) formData.does_not_contain.tree_nuts = false;
+            if (ingredientName.includes('cashew')) formData.does_not_contain.tree_nuts = false;
+            if (ingredientName.includes('hazelnut')) formData.does_not_contain.tree_nuts = false;
+            if (ingredientName.includes('macadamia')) formData.does_not_contain.tree_nuts = false;
+            if (ingredientName.includes('pecan')) formData.does_not_contain.tree_nuts = false;
+            if (ingredientName.includes('pistachio')) formData.does_not_contain.tree_nuts = false;
+            if (ingredientName.includes('wheat')) formData.does_not_contain.wheat = false;
+            if (ingredientName.includes('flour')) formData.does_not_contain.wheat = false;
+            if (ingredientName.includes('bread')) formData.does_not_contain.wheat = false;
+        });
+
         AddNewRecipe(formData);
     };
 
-    const AddNewRecipe = ({ newRecipe }) => {
-        setData((prev) => [...prev, newRecipe]);
+    const AddNewRecipe = async (newRecipe) => {
+        await PutData({ items: newRecipe });
     }
 
-    // Use useEffect to log the updated data 
-    useEffect(() => { 
-        console.log('Data after change:'); 
-        console.log(data); 
+    // Use useEffect to log the updated data and call PutData
+    useEffect(() => {
+        console.log('Data after change:');
+        console.log(data);
     }, [data]);
 
     return (

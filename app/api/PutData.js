@@ -1,10 +1,10 @@
-export default async function PutData({ data }) {
+export default async function PutData({ items }) {
     try {
         const pantry_id = process.env.NEXT_PUBLIC_PANTRY_ID;
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
-        var raw = JSON.stringify({ data });
+        var raw = JSON.stringify({ items });
 
         var requestOptions = {
             method: 'PUT',
