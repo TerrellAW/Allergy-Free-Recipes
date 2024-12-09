@@ -77,8 +77,8 @@ export default function MakeRecipe({ recipeData }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         setError('Not yet implemented.');
-        // TODO: Append new recipe to data and PUT to Pantry
-        console.log(formData);
+        AddNewRecipe(formData);
+        console.log(data);
     };
 
     const AddNewRecipe = (newRecipe) => {
