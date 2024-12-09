@@ -9,6 +9,7 @@ Download and Install Dependencies:
 - Node.js
 - npm
 
-To start development server run the command: npm run dev
+In the terminal, navigate to the project's root folder.
+To start development server from there, run the command: npm run dev
 
 Web app will be available in your browser at http://localhost:3000
