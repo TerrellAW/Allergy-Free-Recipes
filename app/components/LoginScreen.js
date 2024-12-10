@@ -8,7 +8,7 @@ import Link from "next/link";
 export default function LoginScreen() {
     const { user, signInWithGoogle, signInWithGithub, logout } = useUserAuth();
 
-    const displayName = user ? user.displayName : "Anonymous User";
+    const displayName = user?.displayName || "Anonymous User";
     
     const handleLogin = async (provider) => {
         if (provider === "google") {
