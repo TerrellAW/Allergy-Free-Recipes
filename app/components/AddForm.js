@@ -92,7 +92,7 @@ export default function MakeRecipe({ recipeData }) {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         console.log('Data before submit:');
         console.log(data);
         e.preventDefault();
@@ -153,11 +153,11 @@ export default function MakeRecipe({ recipeData }) {
             if (ingredientName.includes('bread')) formData.does_not_contain.wheat = false;
         });
 
-        AddNewRecipe(formData);
+        await AddNewRecipe(formData);
     };
 
     const AddNewRecipe = async (newRecipe) => {
-        await PutData({ items: [...data, newRecipe] });
+        await PutData({ items: [newRecipe] });
     }
 
     // Use useEffect to log the updated data and call PutData

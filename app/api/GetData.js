@@ -9,6 +9,11 @@ export default async function GetData() {
         
         const pantrydata = await response.json();
         console.log("Pantry data fetched successfully\n", pantrydata);
+
+        if (pantrydata && pantrydata.items) {
+            pantrydata.items = Array.from(new Map(pantrydata.items.map(item => [item.id, item])).values());
+        }
+
         return pantrydata;
     } catch (error) {
         console.error("Error fetching data from Pantry", error);
