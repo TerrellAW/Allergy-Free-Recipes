@@ -75,13 +75,6 @@ export default function Home() {
                     ))}
                   </ol>
                   <p className="text-sm text-blue-300">Date Posted: {item.published_at}</p>
-                  <h3 className="text-lg font-semibold text-white mt-4 mb-2">Comments</h3>
-                  {item.comments.map((comment, idx) => (
-                    <div key={idx} className="border-t border-blue-700 pt-2 mb-2">
-                      <p className="font-semibold text-white">{comment.author} - {comment.timestamp}</p>
-                      <p className="text-white">{comment.content}</p>
-                    </div>
-                  ))}
                 </div>
               </div>
             ))}
