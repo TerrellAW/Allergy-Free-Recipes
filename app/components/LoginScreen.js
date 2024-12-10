@@ -7,6 +7,8 @@ import Link from "next/link";
 // Users need to be logged in to add recipes or make comments
 export default function LoginScreen() {
     const { user, signInWithGoogle, signInWithGithub, logout } = useUserAuth();
+
+    const displayName = user ? user.displayName : "Anonymous User";
     
     const handleLogin = async (provider) => {
         if (provider === "google") {
@@ -24,7 +26,7 @@ export default function LoginScreen() {
         <div className="flex flex-col items-center justify-center h-screen">
             {user ? (
                 <div className="flex flex-col space-y-6">
-                    <h1 className="text-4xl">Welcome, {user.displayName}</h1>
+                    <h1 className="text-4xl">Welcome, {displayName}</h1>
                     <Link href="/" className="p-2 px-4 bg-blue-100 text-center hover:bg-blue-300 text-blue-950 rounded-md">Go Home</Link>
                     <button onClick={handleLogout} className="p-2 px-4 bg-red-100 text-center hover:bg-blue-300 text-blue-950 rounded-md">Logout</button>
                 </div>
