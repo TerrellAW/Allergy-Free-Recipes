@@ -77,15 +77,13 @@ export default function SearchForm({ recipeData, onSearch }) {
     };
 
     const handleHideCheckboxes = () => {
-        setTimeout(() => {
-            if (!milk && !eggs && !fish && !shellfish && !treeNuts && 
-                !peanuts && !wheat && !soy && !gluten && !sugar && 
-                document.activeElement !== inputRef.current) {
-                setShowCheckboxes(false);
-            }
-        }, 200);
+        if (!milk && !eggs && !fish && !shellfish && !treeNuts && 
+            !peanuts && !wheat && !soy && !gluten && !sugar && 
+            document.activeElement !== inputRef.current) {
+            setShowCheckboxes(false);
+        }
     };
-
+    
     return ( 
         <div className="w-full  max-w-2xl">
             <h1 className="text-3xl text-center font-bold text-blue-50 mb-5">Allergy-Free Recipes</h1>
