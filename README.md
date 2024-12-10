@@ -13,5 +13,5 @@ After npm installs start the development server by entering the command: npm run
 
 Web app will be available in your browser at http://localhost:3000
 
-The web app is contains a powerful search function that can filter recipes based on a user's search terms and allergies.
+The web app contains a powerful search function that can filter recipes based on a user's search terms and allergies.
 The user can tick which allergies they have when searching for a recipe, and recipes that contain those allergens will be hidden.
