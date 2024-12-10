@@ -39,7 +39,8 @@ export default function AddRecipePage() {
     }
 
     return (
-        <main className='bg-blue-950 min-h-screen flex justify-center'>
+        <main className='bg-blue-950 min-h-screen flex flex-col items-center'>
+            <Link href="/" className='max-h-12 p-2 px-4 bg-blue-100 text-center hover:bg-blue-300 text-blue-950 rounded-md'>Home</Link>
             <AddForm recipeData={data} />
         </main>
     );
