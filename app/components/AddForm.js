@@ -1,16 +1,18 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useUserAuth } from "../_utils/auth-context";
 
 import recipeTypeData from "../data/recipeTypes.json";
 import PutData from "../api/PutData";
 
 export default function MakeRecipe({ recipeData }) {
     const [data, setData] = useState(recipeData?.items || []);
+    const { user } = useUserAuth();
 
     const [formData, setFormData] = useState({
         id: data.length + 1, // Might not work due to async nature of data
-        author: 'AnonymousUser',
+        author: user.displayName,
         type: { primary: '', secondary: '' },
         name: '',
         description: '',

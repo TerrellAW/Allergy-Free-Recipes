@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useUserAuth } from "./_utils/auth-context";
+
 import Link from "next/link";
 
 import SearchForm from "./components/SearchForm";
@@ -9,6 +11,7 @@ import GetData from "./api/GetData";
 export default function Home() {
   const [data, setData] = useState(null);
   const [results, setResults] = useState([]);
+  const { user } = useUserAuth();
 
   useEffect(() => {
     async function fetchData() {
@@ -37,9 +40,15 @@ export default function Home() {
           <div className="mt-10">
             <SearchForm recipeData={data} onSearch={setResults} />
           </div>
-          <Link href="./pages/login" className="absolute right-5 top-24 p-2 px-4 bg-blue-100 text-center hover:bg-blue-300 text-blue-950 rounded-md">
+          {user ? (
+            <Link href="./pages/login" className="absolute right-5 top-24 p-2 px-4 bg-blue-100 text-center hover:bg-blue-300 text-blue-950 rounded-md">
+              Logout
+            </Link>
+          ) : (
+            <Link href="./pages/login" className="absolute right-5 top-24 p-2 px-4 bg-blue-100 text-center hover:bg-blue-300 text-blue-950 rounded-md">
               Login
-          </Link>
+            </Link>
+          )}
         </div>
       </header>
       <main className="items-center justify-center relative">    
