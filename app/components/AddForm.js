@@ -268,23 +268,35 @@ export default function MakeRecipe({ recipeData }) {
                 <label className="block text-sm font-medium mb-1">Ingredients</label>
                 <div className="flex flex-col items-center">
                     {formData.ingredients.map((ingredient, index) => (
-                        <div key={index} className="grid grid-cols-2 gap-4 w-full">
-                            <input
-                                type="text"
-                                value={ingredient.name.toLowerCase()}
-                                onChange={(e) => handleIngredientChange(index, 'name', e.target.value)}
-                                placeholder="Ingredient"
-                                className="w-full rounded-md bg-blue-100 text-blue-950 shadow-sm focus:border-blue-300 focus:ring-blue-300"
-                                required
-                            />
-                            <input
-                                type="text"
-                                value={ingredient.quantity.toLowerCase()}
-                                onChange={(e) => handleIngredientChange(index, 'quantity', e.target.value)}
-                                placeholder="Quantity"
-                                className="w-full rounded-md bg-blue-100 text-blue-950 shadow-sm focus:border-blue-300 focus:ring-blue-300"
-                                required
-                            />
+                        <div className="w-full flex flex-col items-center ring-blue-50 border rounded-md p-4">
+                            <div key={index} className="grid grid-cols-2 gap-4 w-full">
+                                <input
+                                    type="text"
+                                    value={ingredient.name.toLowerCase()}
+                                    onChange={(e) => handleIngredientChange(index, 'name', e.target.value)}
+                                    placeholder="Ingredient"
+                                    className="w-full rounded-md bg-blue-100 text-blue-950 shadow-sm focus:border-blue-300 focus:ring-blue-300"
+                                    required
+                                />
+                                <input
+                                    type="text"
+                                    value={ingredient.quantity.toLowerCase()}
+                                    onChange={(e) => handleIngredientChange(index, 'quantity', e.target.value)}
+                                    placeholder="Quantity"
+                                    className="w-full rounded-md bg-blue-100 text-blue-950 shadow-sm focus:border-blue-300 focus:ring-blue-300"
+                                    required
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => setFormData((prev) => ({
+                                    ...prev,
+                                    ingredients: prev.ingredients.filter((_, i) => i !== index),
+                                }))}
+                                className="text-blue-950 bg-red-100 rounded-md p-2 px-4 mt-4 hover:bg-blue-300"
+                            >
+                                Remove Ingredient
+                            </button>
                         </div>
                     ))}
                     <button
@@ -292,7 +304,7 @@ export default function MakeRecipe({ recipeData }) {
                         onClick={handleAddIngredient}
                         className="text-blue-950 bg-blue-100 rounded-md p-2 px-4 mt-4 hover:bg-blue-300"
                     >
-                        Add Ingredient
+                        Add New Ingredient
                     </button>
                 </div>
             </div>
@@ -300,7 +312,7 @@ export default function MakeRecipe({ recipeData }) {
                 <label htmlFor="instructions" className="block text-sm font-medium mb-1">Instructions</label>
                 <div className="flex flex-col items-center">
                     {formData.instructions.map((instruction, index) => (
-                        <div key={index} className="gap-4 w-full">
+                        <div key={index} className="w-full flex flex-col items-center ring-blue-50 border rounded-md p-4">
                             <input 
                                 type="text"
                                 value={instruction}
@@ -309,6 +321,16 @@ export default function MakeRecipe({ recipeData }) {
                                 className="w-full rounded-md bg-blue-100 text-blue-950 shadow-sm focus:border-blue-300 focus:ring-blue-300"
                                 required
                             />
+                            <button
+                                type="button"
+                                onClick={() => setFormData((prev) => ({
+                                    ...prev,
+                                    instructions: prev.instructions.filter((_, i) => i !== index),
+                                }))}
+                                className="text-blue-950 bg-red-100 rounded-md p-2 px-4 mt-4 hover:bg-blue-300"
+                            >
+                                Remove Step
+                            </button>
                         </div>
                     ))}
                     <button
@@ -316,7 +338,7 @@ export default function MakeRecipe({ recipeData }) {
                         onClick={handleAddInstruction}
                         className="text-blue-950 bg-blue-100 rounded-md p-2 px-4 mt-4 hover:bg-blue-300"
                     >
-                        Add Step
+                        Add New Step
                     </button>
                 </div>
             </div>
@@ -324,7 +346,7 @@ export default function MakeRecipe({ recipeData }) {
                 <label htmlFor="tags" className="block text-sm font-medium mb-1">Tags</label>
                 <div className="flex flex-col items-center">
                     {formData.tags.map((tag, index) => (
-                        <div key={index} className="gap-4 w-full">
+                        <div key={index} className="w-full flex flex-col items-center ring-blue-50 border rounded-md p-4">
                             <input
                                 type="text"
                                 value={tag.toLowerCase()}
@@ -332,6 +354,16 @@ export default function MakeRecipe({ recipeData }) {
                                 placeholder="Tag"
                                 className="w-full rounded-md bg-blue-100 text-blue-950 shadow-sm focus:border-blue-300 focus:ring-blue-300"
                             />
+                            <button
+                                type="button"
+                                onClick={() => setFormData((prev) => ({
+                                    ...prev,
+                                    tags: prev.tags.filter((_, i) => i !== index),
+                                }))}
+                                className="text-blue-950 bg-red-100 rounded-md p-2 px-4 mt-4 hover:bg-blue-300"
+                            >
+                                Remove Tag
+                            </button>
                         </div>
                     ))}
                     <button
@@ -339,7 +371,7 @@ export default function MakeRecipe({ recipeData }) {
                         onClick={handleAddTag}
                         className="text-blue-950 bg-blue-100 rounded-md p-2 px-4 mt-4 hover:bg-blue-300"
                     >
-                        Add Tag
+                        Add New Tag
                     </button>
                 </div>
             </div>
