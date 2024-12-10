@@ -21,19 +21,22 @@ export default function SearchForm({ recipeData, onSearch }) {
 
     const checkboxesRef = useRef(null);
     const inputRef = useRef(null);
+    const hideTimeoutRef = useRef(null);
+
+    const checkboxStates = { milk, eggs, fish, shellfish, treeNuts, peanuts, wheat, soy, gluten, sugar };
 
     useEffect(() => {
-        if (showCheckboxes) {
-            checkboxesRef.current.style.maxHeight = `${checkboxesRef.current.scrollHeight}px`;
-        } else {
-            checkboxesRef.current.style.maxHeight = '0';
-        }
-    }, [showCheckboxes]);
-
-    useEffect(() => {
-        const anyCheckboxChecked = milk || eggs || fish || shellfish || treeNuts || peanuts || wheat || soy || gluten || sugar;
+        const anyCheckboxChecked = Object.values(checkboxStates).some(state => state);
         setShowCheckboxes(anyCheckboxChecked || document.activeElement === inputRef.current);
     }, [milk, eggs, fish, shellfish, treeNuts, peanuts, wheat, soy, gluten, sugar]);
+
+    useEffect(() => {
+        if (checkboxesRef.current) {
+            checkboxesRef.current.style.maxHeight = showCheckboxes
+                ? `${checkboxesRef.current.scrollHeight}px`
+                : '0';
+        }
+    }, [showCheckboxes]);
 
     const handleSearch = () => { 
         console.log('searchText:', searchText);
@@ -74,14 +77,25 @@ export default function SearchForm({ recipeData, onSearch }) {
 
     const handleShowCheckboxes = () => {
         setShowCheckboxes(true);
+        if (hideTimeoutRef.current) {
+            clearTimeout(hideTimeoutRef.current);
+        }
     };
 
     const handleHideCheckboxes = () => {
-        if (!milk && !eggs && !fish && !shellfish && !treeNuts && 
-            !peanuts && !wheat && !soy && !gluten && !sugar && 
-            document.activeElement !== inputRef.current) {
-            setShowCheckboxes(false);
+        if (hideTimeoutRef.current) {
+            clearTimeout(hideTimeoutRef.current);
         }
+        hideTimeoutRef.current = setTimeout(() => {
+            if (!Object.values(checkboxStates).some(state => state) && document.activeElement !== inputRef.current) {
+                setShowCheckboxes(false);
+            }
+        }, 300);
+    };
+
+    const handleCheckboxChange = (setter) => (e) => {
+        setter(e.target.checked);
+        handleShowCheckboxes();
     };
     
     return ( 
@@ -114,23 +128,23 @@ export default function SearchForm({ recipeData, onSearch }) {
                     <div className="w-1/2 pr-2">
                         <div className="space-y-2">
                             <label className="flex items-center">
-                                <input type="checkbox" checked={milk} onChange={e => setMilk(e.target.checked)} className="mr-2" />
+                                <input type="checkbox" checked={milk} onChange={handleCheckboxChange(setMilk)} className="mr-2" />
                                 Milk
                             </label>
                             <label className="flex items-center">
-                                <input type="checkbox" checked={eggs} onChange={e => setEggs(e.target.checked)} className="mr-2" />
+                                <input type="checkbox" checked={eggs} onChange={handleCheckboxChange(setEggs)} className="mr-2" />
                                 Eggs
                             </label>
                             <label className="flex items-center">
-                                <input type="checkbox" checked={fish} onChange={e => setFish(e.target.checked)} className="mr-2" />
+                                <input type="checkbox" checked={fish} onChange={handleCheckboxChange(setFish)} className="mr-2" />
                                 Fish
                             </label>
                             <label className="flex items-center">
-                                <input type="checkbox" checked={shellfish} onChange={e => setShellfish(e.target.checked)} className="mr-2" />
+                                <input type="checkbox" checked={shellfish} onChange={handleCheckboxChange(setShellfish)} className="mr-2" />
                                 Shellfish
                             </label>
                             <label className="flex items-center">
-                                <input type="checkbox" checked={treeNuts} onChange={e => setTreeNuts(e.target.checked)} className="mr-2" />
+                                <input type="checkbox" checked={treeNuts} onChange={handleCheckboxChange(setTreeNuts)} className="mr-2" />
                                 Tree Nuts
                             </label>
                         </div>
@@ -138,23 +152,23 @@ export default function SearchForm({ recipeData, onSearch }) {
                     <div className="w-1/2 pl-2">
                         <div className="space-y-2">
                             <label className="flex items-center">
-                                <input type="checkbox" checked={peanuts} onChange={e => setPeanuts(e.target.checked)} className="mr-2" />
+                                <input type="checkbox" checked={peanuts} onChange={handleCheckboxChange(setPeanuts)} className="mr-2" />
                                 Peanuts
                             </label>
                             <label className="flex items-center">
-                                <input type="checkbox" checked={wheat} onChange={e => setWheat(e.target.checked)} className="mr-2" />
+                                <input type="checkbox" checked={wheat} onChange={handleCheckboxChange(setWheat)} className="mr-2" />
                                 Wheat
                             </label>
                             <label className="flex items-center">
-                                <input type="checkbox" checked={soy} onChange={e => setSoy(e.target.checked)} className="mr-2" />
+                                <input type="checkbox" checked={soy} onChange={handleCheckboxChange(setSoy)} className="mr-2" />
                                 Soy
                             </label>
                             <label className="flex items-center">
-                                <input type="checkbox" checked={gluten} onChange={e => setGluten(e.target.checked)} className="mr-2" />
+                                <input type="checkbox" checked={gluten} onChange={handleCheckboxChange(setGluten)} className="mr-2" />
                                 Gluten
                             </label>
                             <label className="flex items-center">
-                                <input type="checkbox" checked={sugar} onChange={e => setSugar(e.target.checked)} className="mr-2" />
+                                <input type="checkbox" checked={sugar} onChange={handleCheckboxChange(setSugar)} className="mr-2" />
                                 Sugar
                             </label>
                         </div>
