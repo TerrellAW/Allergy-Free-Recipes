@@ -10,9 +10,11 @@ export default function MakeRecipe({ recipeData }) {
     const [data, setData] = useState(recipeData?.items || []);
     const { user } = useUserAuth();
 
+    const displayName = user?.displayName || "Anonymous User";
+
     const [formData, setFormData] = useState({
         id: data.length + 1,
-        author: user.displayName,
+        author: displayName,
         type: { primary: '', secondary: '' },
         name: '',
         description: '',
