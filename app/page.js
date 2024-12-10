@@ -37,9 +37,6 @@ export default function Home() {
           <Link href="./pages/addrecipe" className="absolute left-5 top-24 p-2 px-4 bg-blue-100 text-center hover:bg-blue-300 text-blue-950 rounded-md">
               Add Recipe
           </Link>
-          <div className="mt-10">
-            <SearchForm recipeData={data} onSearch={setResults} />
-          </div>
           {user ? (
             <Link href="./pages/login" className="absolute right-5 top-24 p-2 px-4 bg-blue-100 text-center hover:bg-blue-300 text-blue-950 rounded-md">
               Logout
@@ -49,6 +46,9 @@ export default function Home() {
               Login
             </Link>
           )}
+          <div className="mt-10 searchbar">
+            <SearchForm recipeData={data} onSearch={setResults} />
+          </div>
         </div>
       </header>
       <main className="items-center justify-center relative">    
