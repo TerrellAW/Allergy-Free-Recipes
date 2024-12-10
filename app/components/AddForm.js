@@ -11,7 +11,7 @@ export default function MakeRecipe({ recipeData }) {
     const { user } = useUserAuth();
 
     const [formData, setFormData] = useState({
-        id: data.length + 1, // Might not work due to async nature of data
+        id: data.length + 1,
         author: user.displayName,
         type: { primary: '', secondary: '' },
         name: '',
@@ -94,6 +94,34 @@ export default function MakeRecipe({ recipeData }) {
         }));
     };
 
+    const resetForm = () => {
+        setFormData({
+            id: data.length + 1,
+            author: user.displayName,
+            type: { primary: '', secondary: '' },
+            name: '',
+            description: '',
+            ingredients: [{ name: '', quantity: '' }],
+            instructions: [''],
+            published_at: new Date().toISOString().split('T')[0],
+            tags: [''],
+            comments: [{}],
+            photos: [''],
+            does_not_contain: {
+                eggs: true,
+                fish: true,
+                gluten: true,
+                milk: true,
+                peanuts: true,
+                shellfish: true,
+                soy: true,
+                sugar: true,
+                tree_nuts: true,
+                wheat: true,
+            },
+        });
+    };
+
     const handleSubmit = async (e) => {
         console.log('Data before submit:');
         console.log(data);
@@ -156,6 +184,7 @@ export default function MakeRecipe({ recipeData }) {
         });
 
         await AddNewRecipe(formData);
+        resetForm();
     };
 
     const AddNewRecipe = async (newRecipe) => {
