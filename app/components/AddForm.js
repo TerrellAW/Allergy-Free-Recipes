@@ -268,7 +268,7 @@ export default function MakeRecipe({ recipeData }) {
                 <label className="block text-sm font-medium mb-1">Ingredients</label>
                 <div className="flex flex-col items-center">
                     {formData.ingredients.map((ingredient, index) => (
-                        <div className="w-full flex flex-col items-center ring-blue-50 border rounded-md p-4">
+                        <div key={index} className="w-full flex flex-col items-center ring-blue-50 border rounded-md p-4">
                             <div key={index} className="grid grid-cols-2 gap-4 w-full">
                                 <input
                                     type="text"
